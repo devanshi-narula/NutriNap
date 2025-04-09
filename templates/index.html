@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriNap</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+            padding: 20px;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 30px auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 25px;
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .result h3 {
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+
+        .result h4 {
+            margin-top: 15px;
+            color: #6a1b9a;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            input, select, .btn {
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-container {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>NutriNap</h2>
+    <form method="post">
+        <div class="form-group">
+            <label>Sleep Duration (hours):</label>
+            <input type="number" step="0.1" name="sleep_duration" required>
+        </div>
+        <div class="form-group">
+            <label>Quality of Sleep (1-10):</label>
+            <input type="number" name="quality_of_sleep" min="1" max="10" required>
+        </div>
+        <div class="form-group">
+            <label>Physical Activity Level (1-100):</label>
+            <input type="number" name="physical_activity" min="1" max="100" required>
+        </div>
+        <div class="form-group">
+            <label>BMI Category:</label>
+            <select name="bmi_category" required>
+                <option value="Underweight">Underweight</option>
+                <option value="Normal">Normal</option>
+                <option value="Overweight">Overweight</option>
+                <option value="Obese">Obese</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Heart Rate (bpm):</label>
+            <input type="number" name="heart_rate" required>
+        </div>
+        <div class="form-group">
+            <label>Daily Steps:</label>
+            <input type="number" name="daily_steps" required>
+        </div>
+        <div class="form-group">
+            <label>Dietary Habits:</label>
+            <select name="dietary_habits" required>
+                <option value="Unhealthy">Unhealthy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Healthy">Healthy</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Systolic Blood Pressure:</label>
+            <input type="number" name="systolic_bp" required>
+        </div>
+        <div class="form-group">
+            <label>Diastolic Blood Pressure:</label>
+            <input type="number" name="diastolic_bp" required>
+        </div>
+        <button type="submit" class="btn">Predict</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h3>Prediction Results:</h3>
+            <p><strong>Predicted Health Index:</strong> {{ result.predicted_health }}</p>
+            <p><strong>Predicted Stress Level:</strong> {{ result.predicted_stress }}</p>
+            <h4>Suggestions:</h4>
+            <ul>
+                {% for suggestion in result.suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
