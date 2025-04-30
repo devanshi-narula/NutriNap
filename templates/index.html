@@ -130,51 +130,74 @@
 <div class="form-container">
     <h2>NutriNap</h2>
     <form method="post">
+
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" step="1" name="age" value="{{ user_input['Age'] if user_input }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <select name="gender" required>
+                <option value="Male" {% if user_input and user_input['Gender'] == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if user_input and user_input['Gender'] == 'Female' %}selected{% endif %}>Female</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label>Sleep Duration (hours):</label>
-            <input type="number" step="0.1" name="sleep_duration" required>
+            <input type="number" step="0.1" name="sleep_duration" value="{{ user_input['Sleep Duration'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>Quality of Sleep (1-10):</label>
-            <input type="number" name="quality_of_sleep" min="1" max="10" required>
+            <input type="number" name="quality_of_sleep" min="1" max="10" value="{{ user_input['Quality of Sleep'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>Physical Activity Level (1-100):</label>
-            <input type="number" name="physical_activity" min="1" max="100" required>
+            <input type="number" name="physical_activity" min="1" max="100" value="{{ user_input['Physical Activity Level'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>BMI Category:</label>
             <select name="bmi_category" required>
-                <option value="Underweight">Underweight</option>
-                <option value="Normal">Normal</option>
-                <option value="Overweight">Overweight</option>
-                <option value="Obese">Obese</option>
+                <option value="Underweight" {% if user_input and user_input['BMI Category'] == 'Underweight' %}selected{% endif %}>Underweight</option>
+                <option value="Normal" {% if user_input and user_input['BMI Category'] == 'Normal' %}selected{% endif %}>Normal</option>
+                <option value="Overweight" {% if user_input and user_input['BMI Category'] == 'Overweight' %}selected{% endif %}>Overweight</option>
+                <option value="Obese" {% if user_input and user_input['BMI Category'] == 'Obese' %}selected{% endif %}>Obese</option>
             </select>
         </div>
+        
         <div class="form-group">
             <label>Heart Rate (bpm):</label>
-            <input type="number" name="heart_rate" required>
+            <input type="number" name="heart_rate" value="{{ user_input['Heart Rate'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>Daily Steps:</label>
-            <input type="number" name="daily_steps" required>
+            <input type="number" name="daily_steps" value="{{ user_input['Daily Steps'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>Dietary Habits:</label>
             <select name="dietary_habits" required>
-                <option value="Unhealthy">Unhealthy</option>
-                <option value="Moderate">Moderate</option>
-                <option value="Healthy">Healthy</option>
+                <option value="Unhealthy" {% if user_input and user_input['Dietary Habits'] == 'Unhealthy' %}selected{% endif %}>Unhealthy</option>
+                <option value="Moderate" {% if user_input and user_input['Dietary Habits'] == 'Moderate' %}selected{% endif %}>Moderate</option>
+                <option value="Healthy" {% if user_input and user_input['Dietary Habits'] == 'Healthy' %}selected{% endif %}>Healthy</option>
             </select>
         </div>
+        
         <div class="form-group">
             <label>Systolic Blood Pressure:</label>
-            <input type="number" name="systolic_bp" required>
+            <input type="number" name="systolic_bp" value="{{ user_input['Systolic BP'] if user_input }}" required>
         </div>
+        
         <div class="form-group">
             <label>Diastolic Blood Pressure:</label>
-            <input type="number" name="diastolic_bp" required>
+            <input type="number" name="diastolic_bp" value="{{ user_input['Diastolic BP'] if user_input }}" required>
         </div>
+        
         <button type="submit" class="btn">Predict</button>
     </form>
 

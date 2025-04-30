@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriNap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+            padding: 20px;
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dark-mode {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #007bff;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 30px auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .dark-mode .form-container {
+            background: #1e1e1e;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .dark-mode h2 {
+            color: #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .dark-mode label {
+            color: #e0e0e0;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: border 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode input, .dark-mode select {
+            background: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 25px;
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .result {
+            background: #2e2e2e;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .result h3 {
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+
+        .result h4 {
+            margin-top: 15px;
+            color: #6a1b9a;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .dark-mode ul {
+            color: #e0e0e0;
+        }
+
+        .toggle-dark-mode {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-dark-mode:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>NutriNap</h1>
+</header>
+
+<div class="form-container">
+    <h2>Health and Stress Prediction</h2>
+    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <form method="post" id="nutrinap-form">
+        <div class="form-group">
+            <label for="sleep-duration">Sleep Duration (hours):</label>
+            <input type="number" step="0.1" id="sleep-duration" name="sleep_duration" placeholder="e.g., 7.5" required>
+        </div>
+        <div class="form-group">
+            <label for="quality-of-sleep">Quality of Sleep (1-10):</label>
+            <input type="number" id="quality-of-sleep" name="quality_of_sleep" min="1" max="10" placeholder="e.g., 8" required>
+        </div>
+        <div class="form-group">
+            <label for="physical-activity">Physical Activity Level (1-100):</label>
+            <input type="number" id="physical-activity" name="physical_activity" min="1" max="100" placeholder="e.g., 50" required>
+        </div>
+        <div class="form-group">
+            <label for="bmi-category">BMI Category:</label>
+            <select id="bmi-category" name="bmi_category" required>
+                <option value="Underweight">Underweight</option>
+                <option value="Normal">Normal</option>
+                <option value="Overweight">Overweight</option>
+                <option value="Obese">Obese</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="heart-rate">Heart Rate (bpm):</label>
+            <input type="number" id="heart-rate" name="heart_rate" placeholder="e.g., 72" required>
+        </div>
+        <div class="form-group">
+            <label for="daily-steps">Daily Steps:</label>
+            <input type="number" id="daily-steps" name="daily_steps" placeholder="e.g., 10000" required>
+        </div>
+        <div class="form-group">
+            <label for="dietary-habits">Dietary Habits:</label>
+            <select id="dietary-habits" name="dietary_habits" required>
+                <option value="Unhealthy">Unhealthy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Healthy">Healthy</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="systolic-bp">Systolic Blood Pressure:</label>
+            <input type="number" id="systolic-bp" name="systolic_bp" placeholder="e.g., 120" required>
+        </div>
+        <div class="form-group">
+            <label for="diastolic-bp">Diastolic Blood Pressure:</label>
+            <input type="number" id="diastolic-bp" name="diastolic_bp" placeholder="e.g., 80" required>
+        </div>
+        <button type="submit" class="btn">Predict</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h3>Prediction Results:</h3>
+            <p><strong>Predicted Health Index:</strong> {{ result.predicted_health }}</p>
+            <p><strong>Predicted Stress Level:</strong> {{ result.predicted_stress }}</p>
+            <h4>Suggestions:</h4>
+            <ul>
+                {% for suggestion in result.suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+<footer>
+    <p>&copy; 2025 NutriNap. All rights reserved.</p>
+</footer>
+
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
+
+</body>
+</html>
